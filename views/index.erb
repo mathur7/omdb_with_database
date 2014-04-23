@@ -1,0 +1,19 @@
+<h1> <a class = "headline" href = '/'> Flixter </a></h1>
+<div class = "movies_list"> 
+	<ul id = "list">
+		<% @movies.each do |movie| %>
+		<a href = "/movie/<%=movie['id']%>"><%= movie["title"] %>
+		<%= movie["year"] %>
+		<% end %>
+	</ul>
+</div>
+
+<div class = "homepage_link">
+		<h6>Click <a href ='http://www.imdb.com/'>here</a> to go to IMDB </h6>
+</div>
+
+
+
+	
+
+

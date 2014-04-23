@@ -11,17 +11,33 @@ end
 
 get '/' do
   #Add code here
+  erb :search
+
 end
 
+get '/movies' do # or results
 
+  c = PGconn.new(:host => "localhost", :dbname => dbname)
+  @movies = c.exec_params("select * from movieinfo WHERE title = $1", [params["title"]])
+  c.close
+  erb :index
+end
 #Add code here
 
-
-get '/movies/new' do
-  erb :new_movie
+get '/movie/:id' do
+  c = PGconn.new(:host => "localhost", :dbname => dbname)
+  movies = c.exec_params("select * from movieinfo WHERE id = $1;", [params[:id]])
+  # @movies_actors_common_val = c.exec_params("SELECT * FROM movies_actors INNER JOIN actors ON movies_actors.actor_id = actors.id WHERE movies_actors.movie_id = $1", [params[:id]])  
+  #create movie_Actors file
+  c.close
+  erb :show
 end
 
-post '/movies' do
+get '/movies/new' do
+  erb :new
+end
+
+post '/movie' do
   c = PGconn.new(:host => "localhost", :dbname => dbname)
   c.exec_params("INSERT INTO movies (title, year) VALUES ($1, $2)",
                   [params["title"], params["year"]])
@@ -30,7 +46,7 @@ post '/movies' do
 end
 
 def dbname
-  "test.db"
+  "movies" # this might change based on your file
 end
 
 def create_movies_table
@@ -67,3 +83,10 @@ def seed_movies_table
   c.close
 end
 
+
+# join phase 4
+
+# c = PGconn.new(:host => "localhost", :dbname => dbname)
+  # movies = c.exec_params("select * from movieinfo WHERE id = $1;", [params[:id]])
+  # @common_value = c.exec_params("select * from movie_actors inner join actors on movie_actors_id = actors_id where")
+  # c.close

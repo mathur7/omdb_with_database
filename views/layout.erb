@@ -1,9 +1,18 @@
 <!doctype html>
 <html>
 <head>
-  <title>Your Title Here</title>
+  <meta charset="UTF-8">
+  <link href = "/css/bootstrap.css" rel = "stylesheet" >
+  <link href = "/css/bootstrap-responsive.css" rel = "stylesheet">
+  <link rel="stylesheet" href="/stylesheet.css">
+  <title>Flixter</title>  
 </head>
 <body>
-      <%= yield  %>
+    <div class = "wrap">
+     	<%= yield  %> <br>
+  	</div>
+  	<div class = "footer">
+      <p>Copyright &copy; <%= Date.today.year %> Flixter </p>
+	</div>  	
 </body>
 </html>
