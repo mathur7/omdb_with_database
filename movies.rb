@@ -3,19 +3,16 @@ require 'sinatra/reloader'
 require 'pry'
 require 'pg'
 
-# A setup step to get rspec tests running.
 configure do
   root = File.expand_path(File.dirname(__FILE__))
   set :views, File.join(root,'views')
 end
 
 get '/' do
-  #Add code here
   erb :search
-
 end
 
-get '/movies' do # or results
+get '/movies' do 
 
   c = PGconn.new(:host => "localhost", :dbname => dbname)
   @movies = c.exec_params("select * from movieinfo WHERE title = $1", [params["title"]])
@@ -27,8 +24,6 @@ end
 get '/movie/:id' do
   c = PGconn.new(:host => "localhost", :dbname => dbname)
   movies = c.exec_params("select * from movieinfo WHERE id = $1;", [params[:id]])
-  # @movies_actors_common_val = c.exec_params("SELECT * FROM movies_actors INNER JOIN actors ON movies_actors.actor_id = actors.id WHERE movies_actors.movie_id = $1", [params[:id]])  
-  #create movie_Actors file
   c.close
   erb :show
 end
@@ -46,7 +41,7 @@ post '/movie' do
 end
 
 def dbname
-  "movies" # this might change based on your file
+  "movies" 
 end
 
 def create_movies_table
@@ -86,7 +81,7 @@ end
 
 # join phase 4
 
-# c = PGconn.new(:host => "localhost", :dbname => dbname)
+  # c = PGconn.new(:host => "localhost", :dbname => dbname)
   # movies = c.exec_params("select * from movieinfo WHERE id = $1;", [params[:id]])
   # @common_value = c.exec_params("select * from movie_actors inner join actors on movie_actors_id = actors_id where")
   # c.close
